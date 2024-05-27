@@ -1,0 +1,32 @@
+def analysis_data(self):
+    data = ""
+    for ref in refs:
+        num = int(ref[4:])
+        mask = refs[ref].get("mask", "")
+        len_mask = len(mask)
+        left = 0
+        right = 0
+        for i in range(1, len_mask+1):
+            if mask[i-1] == "0":
+                right = i
+                if i == len_mask:
+                    num_left = (num - 1) * len_mask + left + 1
+                    num_right = (num - 1) * len_mask + right
+                    data = data + str(num_left) + "-" + str(num_right) + ","
+            else:
+                if right - left > 1:
+                    num_left = (num - 1) * len_mask + left + 1
+                    num_right = (num - 1) * len_mask + right
+                    data = data + str(num_left) + "-" + str(num_right) + ","
+                if right - left == 1:
+                    num_right = (num - 1) * len_mask + right
+                    data = data + str(num_right) + ","
+                left = i
+                right = i
+
+    if len(data) > 1:
+        data = data[:-1]
+
+    print(data)
+
+    return 0
